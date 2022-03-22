@@ -47,8 +47,8 @@ public class FindTheSamePictureActivity extends AppCompatActivity {
 
         selectedPos = new Vector<>();
         pictures = new Vector<>();
-        pictures.add(new Picture("1", "1"));
-        pictures.add(new Picture("1", "1"));
+        pictures.add(new Picture(" 사과나무의 열매로, 세계적으로 널리 재배되는 열매 가운데 하나", "1"));
+        pictures.add(new Picture("사과", "1"));
         pictures.add(new Picture("2", "2"));
         pictures.add(new Picture("2", "2"));
         pictures.add(new Picture("3", "3"));
@@ -120,11 +120,11 @@ public class FindTheSamePictureActivity extends AppCompatActivity {
                                                             int pos1 = selectedPos.get(0);
                                                             int pos2 = selectedPos.get(1);
                                                             if(pos1 != pos2) {
-                                                                String display = pictures.get(pos1).getDisplay();
-                                                                String display2 = pictures.get(pos2).getDisplay();
-                                                                Log.e("display1", display);
-                                                                Log.e("display2", display2);
-                                                                if (display.equals(display2)) {
+                                                                String tag = pictures.get(pos1).getTag();
+                                                                String tag2 = pictures.get(pos2).getTag();
+                                                                Log.e("tag", tag);
+                                                                Log.e("tag2", tag2);
+                                                                if (tag.equals(tag2)) {
                                                                     Toast.makeText(FindTheSamePictureActivity.this, "잘했습니다.", Toast.LENGTH_SHORT).show();
                                                                     adapter.update(pos1, 2);
                                                                     adapter.update(pos2, 2);

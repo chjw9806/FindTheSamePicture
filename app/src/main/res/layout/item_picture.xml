@@ -15,8 +15,13 @@
             android:background="@color/colorAccent"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="70sp"
-            android:textStyle="bold"
+            android:autoSizeTextType="uniform"
+
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeMaxTextSize="100sp"
+            android:autoSizeStepGranularity="2sp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp"
             tools:text="1" />
     </android.support.constraint.ConstraintLayout>
 </layout>
