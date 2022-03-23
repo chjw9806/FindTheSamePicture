@@ -18,7 +18,7 @@
             android:autoSizeTextType="uniform"
 
             android:autoSizeMinTextSize="12sp"
-            android:autoSizeMaxTextSize="100sp"
+            android:autoSizeMaxTextSize="50dp"
             android:autoSizeStepGranularity="2sp"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp"

@@ -4,13 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
+import android.databinding.DataBindingComponent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 
 import java.util.Vector;
 
@@ -21,6 +25,9 @@ import al.tong.mon.findthesamepicture.databinding.ItemPictureBinding;
 public class FindTheSamePictureAdapter extends RecyclerView.Adapter<FindTheSamePictureAdapter.ViewHolder> {
 
     Vector<Picture> pictures = new Vector<>();
+    Context mContext;
+    //public static String time="";
+    Chronometer chronometer;
 
     private Activity activity;
     private Context context;
@@ -44,6 +51,9 @@ public class FindTheSamePictureAdapter extends RecyclerView.Adapter<FindTheSameP
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ItemPictureBinding binding = holder.binding;
+       // chronometer.setBase(SystemClock.elapsedRealtime());
+       // chronometer.start();
+
 
         if (height != 0 && width != 0) {
             binding.pictureLayout.getLayoutParams().width = width;
@@ -82,7 +92,7 @@ public class FindTheSamePictureAdapter extends RecyclerView.Adapter<FindTheSameP
             binding.pictureTxtView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
             binding.pictureTxtView.setBackgroundColor(Color.BLACK);
         } else {
-
+           // ((FindTheSamePictureActivity) mContext).chronometer.stop();
         }
     }
 
@@ -104,6 +114,8 @@ public class FindTheSamePictureAdapter extends RecyclerView.Adapter<FindTheSameP
     void setStartAnimate(boolean startAnimate) {
         this.startAnimate = startAnimate;
         notifyDataSetChanged();
+
+
     }
 
     void update(int pos, int check) {

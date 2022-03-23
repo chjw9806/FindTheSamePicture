@@ -2,10 +2,12 @@ package al.tong.mon.findthesamepicture.findTheSamePicture;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -25,7 +28,9 @@ import al.tong.mon.findthesamepicture.databinding.ActivityFindthesamepictureBind
 
 
 public class FindTheSamePictureActivity extends AppCompatActivity {
-
+    public static String time="";
+    Chronometer chronometer;
+    int ch;
     ActivityFindthesamepictureBinding binding;
 
     Vector<Picture> pictures;
@@ -44,15 +49,20 @@ public class FindTheSamePictureActivity extends AppCompatActivity {
         adapter = new FindTheSamePictureAdapter(this);
         binding.pictureViews.setAdapter(adapter);
 
+        /*
+        chronometer = (Chronometer) findViewById(R.id.chronometer);
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();*/
+
 
         selectedPos = new Vector<>();
         pictures = new Vector<>();
         pictures.add(new Picture(" 사과나무의 열매로, 세계적으로 널리 재배되는 열매 가운데 하나", "1"));
         pictures.add(new Picture("사과", "1"));
-        pictures.add(new Picture("2", "2"));
-        pictures.add(new Picture("2", "2"));
-        pictures.add(new Picture("3", "3"));
-        pictures.add(new Picture("3", "3"));
+        pictures.add(new Picture("가방", "2"));
+        pictures.add(new Picture("물건을 넣어 들고 다니기에 간편하도록 만든 기구", "2"));
+        pictures.add(new Picture("의자", "3"));
+        pictures.add(new Picture("사람이 앉기 위한 도구", "3"));
         pictures.add(new Picture("4", "4"));
         pictures.add(new Picture("4", "4"));
         pictures.add(new Picture("5", "5"));
@@ -77,16 +87,22 @@ public class FindTheSamePictureActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 Handler handler = new Handler();
                 handler.postDelayed(FindTheSamePictureActivity.this::setCount3, 1000);
+
+
                 binding.pictureLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
+
     }
 
     RecyclerView.OnItemTouchListener onItemTouchListener = new RecyclerView.OnItemTouchListener() {
+
         @Override
         public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent evt) {
+
             int action = evt.getAction();
+
             switch (action) {
                 case MotionEvent.ACTION_UP:
                     View child = recyclerView.findChildViewUnder(evt.getX(), evt.getY());
@@ -128,6 +144,12 @@ public class FindTheSamePictureActivity extends AppCompatActivity {
                                                                     Toast.makeText(FindTheSamePictureActivity.this, "잘했습니다.", Toast.LENGTH_SHORT).show();
                                                                     adapter.update(pos1, 2);
                                                                     adapter.update(pos2, 2);
+                                                                    ch++;
+                                                                    if (ch == 8) {
+                                                                        chronometer.stop();
+
+                                                                        time = chronometer.getText().toString();
+                                                                    }
                                                                 } else {
                                                                     adapter.update(pos1, 0);
                                                                     adapter.update(pos2, 0);
@@ -135,20 +157,34 @@ public class FindTheSamePictureActivity extends AppCompatActivity {
                                                             } else {
                                                                 adapter.update(pos1, 0);
                                                             }
+
                                                             selectedPos.removeAllElements();
                                                             selectedPos.clear();
+
                                                         }
+
+
+
                                                     }
+
                                                 })
                                                 .start();
                                     }
                                 })
                                 .start();
                     }
+
                     break;
+
             }
+            /*chronometer.stop();
+
+            time = chronometer.getText().toString();*/
+
             return false;
+
         }
+
 
         @Override
         public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
@@ -190,6 +226,9 @@ public class FindTheSamePictureActivity extends AppCompatActivity {
             binding.pictureViews.addOnItemTouchListener(onItemTouchListener);
             adapter.setStartAnimate(true);
         }, 1000);
-
+        chronometer = (Chronometer) findViewById(R.id.chronometer);
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
     }
+
 }
